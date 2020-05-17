@@ -48,7 +48,12 @@ func openConnection(uri *url.URL, tlsc *tls.Config, timeout time.Duration, heade
 			}
 			return conn, nil
 		}
-		proxyDialer := proxy.FromEnvironment()
+		//proxyDialer := proxy.FromEnvironment()
+
+		proxyDialer, err := proxy.SOCKS5("tcp", "127.0.0.1:9050", nil, proxy.Direct)
+		if err != nil {
+			return nil, err
+		}
 
 		conn, err := proxyDialer.Dial("tcp", uri.Host)
 		if err != nil {
@@ -70,7 +75,12 @@ func openConnection(uri *url.URL, tlsc *tls.Config, timeout time.Duration, heade
 			}
 			return conn, nil
 		}
-		proxyDialer := proxy.FromEnvironment()
+		//proxyDialer := proxy.FromEnvironment()
+
+		proxyDialer, err := proxy.SOCKS5("tcp", "127.0.0.1:9050", nil, proxy.Direct)
+		if err != nil {
+			return nil, err
+		}
 
 		conn, err := proxyDialer.Dial("tcp", uri.Host)
 		if err != nil {
